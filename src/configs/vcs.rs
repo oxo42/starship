@@ -53,7 +53,7 @@ impl Default for VcsConfig<'_> {
             disabled: false,
             fossil_modules: "$fossil_branch$fossil_metrics",
             git_modules: "$git_branch$git_commit$git_state$git_metrics$git_status",
-            hg_modules: "$hg_branch$hg_state",
+            hg_modules: "$hg_branch$hg_commit$hg_state",
             jj_modules: "$jj_bookmark$jj_change$jj_metrics$jj_status",
             pijul_modules: "$pijul_channel",
         }
