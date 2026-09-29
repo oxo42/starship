@@ -50,6 +50,7 @@ pub mod haskell;
 pub mod haxe;
 pub mod helm;
 pub mod hg_branch;
+pub mod hg_commit;
 pub mod hg_state;
 pub mod hostname;
 pub mod java;
@@ -225,6 +226,8 @@ pub struct FullConfig<'a> {
     helm: helm::HelmConfig<'a>,
     #[serde(borrow)]
     hg_branch: hg_branch::HgBranchConfig<'a>,
+    #[serde(borrow)]
+    hg_commit: hg_commit::HgCommitConfig<'a>,
     #[serde(borrow)]
     hg_state: hg_state::HgStateConfig<'a>,
     #[serde(borrow)]

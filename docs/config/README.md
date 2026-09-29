@@ -279,6 +279,7 @@ $git_state\
 $git_metrics\
 $git_status\
 $hg_branch\
+$hg_commit\
 $hg_state\
 $pijul_channel\
 $docker_context\
@@ -3336,6 +3337,42 @@ truncation_length = 4
 truncation_symbol = ''
 ```
 
+## Mercurial Commit
+
+The `hg_commit` module shows the current commit hash of the repo in your current directory.
+
+> [!TIP]
+> This module is disabled by default.
+> To enable it, set `disabled` to `false` in your configuration file.
+
+### Options
+
+| Option               | Default                    | Description                                 |
+| -------------------- | -------------------------- | ------------------------------------------- |
+| `commit_hash_length` | `7`                        | The length of the displayed hg commit hash. |
+| `format`             | `'[\($hash\)]($style) '`   | The format for the module.                  |
+| `style`              | `'bold green'`             | The style for the module.                   |
+| `disabled`           | `true`                     | Disables the `hg_commit` module.            |
+
+### Variables
+
+| Variable | Example   | Description                        |
+| -------- | --------- | ---------------------------------- |
+| hash     | `b703eb3` | The current hg commit hash         |
+| style\*  |           | Mirrors the value of option `style` |
+
+*: This variable can only be used as a part of a style string
+
+### Example
+
+```toml
+# ~/.config/starship.toml
+
+[hg_commit]
+disabled = false
+commit_hash_length = 12
+```
+
 ## Mercurial State
 
 The `hg_state` module will show in directories which are part of a mercurial
@@ -5278,7 +5315,7 @@ The module will be shown only if a configured VCS is currently in use.
 | `order`          | `["git", "jj", "hg", "pijul", "fossil"]`                    | The order in which to search VCSes.                   |
 | `fossil_modules` | `"$fossil_branch$fossil_metrics"`                           | Modules to show when a Fossil repository is found.    |
 | `git_modules`    | `"$git_branch$git_commit$git_state$git_metrics$git_status"` | Modules to show when a Git repository is found.       |
-| `hg_modules`     | `"$hg_branch$hg_state"`                                     | Modules to show when a Mercurial repository is found. |
+| `hg_modules`     | `"$hg_branch$hg_commit$hg_state"`                           | Modules to show when a Mercurial repository is found. |
 | `jj_modules`     | `"$jj_bookmark$jj_change$jj_metrics$jj_status"`             | Modules to show when a Jujutsu repository is found.   |
 | `pijul_modules`  | `"$pijul_channel"`                                          | Modules to show when a Pijul repository is found.     |
 | `disabled`       | `false`                                                     | Disables the `vcs` module.                            |
