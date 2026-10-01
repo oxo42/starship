@@ -933,6 +933,22 @@
         "disabled": true
       }
     },
+    "hg_status": {
+      "$ref": "#/$defs/HgStatusConfig",
+      "default": {
+        "format": "([\\[$all_status\\]]($style) )",
+        "style": "red bold",
+        "conflicted": "=",
+        "shelved": "\\$",
+        "deleted": "✘",
+        "renamed": "»",
+        "modified": "!",
+        "added": "+",
+        "untracked": "?",
+        "unknown": "…",
+        "disabled": true
+      }
+    },
     "hostname": {
       "$ref": "#/$defs/HostnameConfig",
       "default": {
@@ -1929,7 +1945,7 @@
         "disabled": false,
         "fossil_modules": "$fossil_branch$fossil_metrics",
         "git_modules": "$git_branch$git_commit$git_state$git_metrics$git_status",
-        "hg_modules": "$hg_branch$hg_commit$hg_state",
+        "hg_modules": "$hg_branch$hg_commit$hg_state$hg_status",
         "jj_modules": "$jj_bookmark$jj_change$jj_metrics$jj_status",
         "pijul_modules": "$pijul_channel"
       }
@@ -4437,6 +4453,56 @@
         "format": {
           "type": "string",
           "default": "\\([$state]($style)\\) "
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "HgStatusConfig": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "default": "([\\[$all_status\\]]($style) )"
+        },
+        "style": {
+          "type": "string",
+          "default": "red bold"
+        },
+        "conflicted": {
+          "type": "string",
+          "default": "="
+        },
+        "shelved": {
+          "type": "string",
+          "default": "\\$"
+        },
+        "deleted": {
+          "type": "string",
+          "default": "✘"
+        },
+        "renamed": {
+          "type": "string",
+          "default": "»"
+        },
+        "modified": {
+          "type": "string",
+          "default": "!"
+        },
+        "added": {
+          "type": "string",
+          "default": "+"
+        },
+        "untracked": {
+          "type": "string",
+          "default": "?"
+        },
+        "unknown": {
+          "type": "string",
+          "default": "…"
         },
         "disabled": {
           "type": "boolean",
@@ -7280,7 +7346,7 @@
         "hg_modules": {
           "description": "Modules to use when Mercurial is matched.\n\nThey are configured separately at the top level.",
           "type": "string",
-          "default": "$hg_branch$hg_commit$hg_state"
+          "default": "$hg_branch$hg_commit$hg_state$hg_status"
         },
         "jj_modules": {
           "description": "Modules to use when Jujutsu is matched.\n\nThey are configured separately at the top level.",

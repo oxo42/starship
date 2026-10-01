@@ -49,6 +49,7 @@ mod helm;
 mod hg_branch;
 mod hg_commit;
 mod hg_state;
+mod hg_status;
 mod hostname;
 mod java;
 mod jj_bookmark;
@@ -178,6 +179,7 @@ pub fn handle<'a>(module: &str, context: &'a Context) -> Option<Module<'a>> {
             "hg_branch" => hg_branch::module(context),
             "hg_commit" => hg_commit::module(context),
             "hg_state" => hg_state::module(context),
+            "hg_status" => hg_status::module(context),
             "hostname" => hostname::module(context),
             "java" => java::module(context),
             "jj_bookmark" => jj_bookmark::module(context),
@@ -322,6 +324,7 @@ pub fn description(module: &str) -> &'static str {
         "hg_branch" => "The active branch and topic of the repo in your current directory",
         "hg_commit" => "The active commit of the repo in your current directory",
         "hg_state" => "The current hg operation",
+        "hg_status" => "Symbols representing the state of the current hg repo",
         "hostname" => "The system hostname",
         "java" => "The currently installed version of Java",
         "jj_bookmark" => "The closest ancestor bookmark in Jujutsu",

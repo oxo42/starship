@@ -281,6 +281,7 @@ $git_status\
 $hg_branch\
 $hg_commit\
 $hg_state\
+$hg_status\
 $pijul_channel\
 $docker_context\
 $package\
@@ -3410,6 +3411,77 @@ _BISECTING_, etc.
 
 *: This variable can only be used as a part of a style string
 
+## Mercurial Status
+
+The `hg_status` module shows symbols representing the state of the repo in your
+current directory.
+
+> [!TIP]
+> This module is disabled by default.
+> To enable it, set `disabled` to `false` in your configuration file.
+
+> [!WARNING]
+> In large repositories, especially without `fsmonitor` (watchman), `hg status` can
+> take longer than `command_timeout` (500ms by default). The `unknown` symbol is then
+> shown instead of the working directory changes. Increase `command_timeout` in your
+> configuration to give `hg status` more time.
+
+### Options
+
+| Option       | Default                          | Description                                                                             |
+| ------------ | -------------------------------- | --------------------------------------------------------------------------------------- |
+| `format`     | `'([\[$all_status\]]($style) )'` | The default format for `hg_status`.                                                     |
+| `conflicted` | `'='`                            | The format shown when there are unresolved merge conflicts.                             |
+| `shelved`    | `'\$'`                           | The format shown when a shelve exists for the local repository.                         |
+| `deleted`    | `'✘'`                            | The format shown when a file has been removed or is missing from the working directory. |
+| `renamed`    | `'»'`                            | The format shown when a file has been renamed.                                          |
+| `modified`   | `'!'`                            | The format shown when there are file modifications in the working directory.            |
+| `added`      | `'+'`                            | The format shown when a new file has been added.                                        |
+| `untracked`  | `'?'`                            | The format shown when there are untracked files in the working directory.               |
+| `unknown`    | `'…'`                            | The format shown instead of the changes when `hg status` fails or times out.            |
+| `style`      | `'bold red'`                     | The style for the module.                                                               |
+| `disabled`   | `true`                           | Disables the `hg_status` module.                                                        |
+
+### Variables
+
+The following variables can be used in `format`:
+
+| Variable     | Description                                                                               |
+| ------------ | ----------------------------------------------------------------------------------------- |
+| `all_status` | Shortcut for `$conflicted$shelved$unknown$deleted$renamed$modified$added$untracked`.      |
+| `conflicted` | Displays `conflicted` when there are unresolved merge conflicts.                          |
+| `shelved`    | Displays `shelved` when a shelve exists for the local repository.                         |
+| `deleted`    | Displays `deleted` when a file has been removed or is missing from the working directory. |
+| `renamed`    | Displays `renamed` when a file has been renamed.                                          |
+| `modified`   | Displays `modified` when there are file modifications in the working directory.           |
+| `added`      | Displays `added` when a new file has been added.                                          |
+| `untracked`  | Displays `untracked` when there are untracked files in the working directory.             |
+| `unknown`    | Displays `unknown` when `hg status` fails or times out, instead of the changes.           |
+| style\*      | Mirrors the value of option `style`                                                       |
+
+*: This variable can only be used as a part of a style string
+
+The following variables can be used in `conflicted`, `shelved`, `deleted`, `renamed`, `modified`, `added`, and `untracked`:
+
+| Variable | Description                           |
+| -------- | ------------------------------------- |
+| `count`  | Show the number of files (or shelves) |
+
+### Example
+
+```toml
+# ~/.config/starship.toml
+
+[hg_status]
+disabled = false
+conflicted = '🏳'
+shelved = '📦'
+modified = '📝'
+added = '[++\($count\)](green)'
+renamed = '👅'
+deleted = '🗑'
+```
+
 ## Mise
 
 The `mise` module shows the current mise health as reported by running `mise doctor`.
@@ -5315,7 +5387,7 @@ The module will be shown only if a configured VCS is currently in use.
 | `order`          | `["git", "jj", "hg", "pijul", "fossil"]`                    | The order in which to search VCSes.                   |
 | `fossil_modules` | `"$fossil_branch$fossil_metrics"`                           | Modules to show when a Fossil repository is found.    |
 | `git_modules`    | `"$git_branch$git_commit$git_state$git_metrics$git_status"` | Modules to show when a Git repository is found.       |
-| `hg_modules`     | `"$hg_branch$hg_commit$hg_state"`                           | Modules to show when a Mercurial repository is found. |
+| `hg_modules`     | `"$hg_branch$hg_commit$hg_state$hg_status"`                 | Modules to show when a Mercurial repository is found. |
 | `jj_modules`     | `"$jj_bookmark$jj_change$jj_metrics$jj_status"`             | Modules to show when a Jujutsu repository is found.   |
 | `pijul_modules`  | `"$pijul_channel"`                                          | Modules to show when a Pijul repository is found.     |
 | `disabled`       | `false`                                                     | Disables the `vcs` module.                            |

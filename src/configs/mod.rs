@@ -52,6 +52,7 @@ pub mod helm;
 pub mod hg_branch;
 pub mod hg_commit;
 pub mod hg_state;
+pub mod hg_status;
 pub mod hostname;
 pub mod java;
 pub mod jj_bookmark;
@@ -230,6 +231,8 @@ pub struct FullConfig<'a> {
     hg_commit: hg_commit::HgCommitConfig<'a>,
     #[serde(borrow)]
     hg_state: hg_state::HgStateConfig<'a>,
+    #[serde(borrow)]
+    hg_status: hg_status::HgStatusConfig<'a>,
     #[serde(borrow)]
     hostname: hostname::HostnameConfig<'a>,
     #[serde(borrow)]

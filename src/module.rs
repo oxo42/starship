@@ -56,6 +56,7 @@ pub const ALL_MODULES: &[&str] = &[
     "hg_branch",
     "hg_commit",
     "hg_state",
+    "hg_status",
     "hostname",
     "java",
     "jj_bookmark",

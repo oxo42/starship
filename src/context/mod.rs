@@ -466,7 +466,18 @@ impl<'a> Context<'a> {
         cmd: T,
         args: &[U],
     ) -> Option<CommandOutput> {
-        log::trace!("Executing command {cmd:?} with args {args:?} from context");
+        self.exec_cmd_with_env(cmd, args, &[])
+    }
+
+    /// Execute a command with additional environment variables and return the output on stdout
+    /// and stderr if successful
+    pub fn exec_cmd_with_env<T: AsRef<OsStr> + Debug, U: AsRef<OsStr> + Debug>(
+        &self,
+        cmd: T,
+        args: &[U],
+        envs: &[(&str, &str)],
+    ) -> Option<CommandOutput> {
+        log::trace!("Executing command {cmd:?} with args {args:?} and env {envs:?} from context");
         #[cfg(test)]
         {
             let command = crate::utils::display_command(&cmd, args);
@@ -480,7 +491,9 @@ impl<'a> Context<'a> {
             }
         }
         let mut cmd = create_command(cmd).ok()?;
-        cmd.args(args).current_dir(&self.current_dir);
+        cmd.args(args)
+            .envs(envs.iter().copied())
+            .current_dir(&self.current_dir);
         exec_timeout(
             &mut cmd,
             Duration::from_millis(self.root_config.command_timeout),

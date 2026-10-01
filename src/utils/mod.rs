@@ -396,6 +396,14 @@ Elixir 1.10 (compiled with Erlang/OTP 22)\n",
             stdout: String::from("cbc6bacb6d39def9c6117b7b9dfd47c66c966f22"),
             stderr: String::default(),
         }),
+        "hg resolve --list" => Some(CommandOutput {
+            stdout: String::from("U a\nR b\nU c\n"),
+            stderr: String::default(),
+        }),
+        "hg status --copies" => Some(CommandOutput {
+            stdout: String::from("M f1\nA f2b\n  f2\nA new\nR f2\nR f3\n? untr\n"),
+            stderr: String::default(),
+        }),
         s if s.ends_with("java -Xinternalversion") => Some(CommandOutput {
             stdout: String::from(
                 "OpenJDK 64-Bit Server VM (13.0.2+8) for bsd-amd64 JRE (13.0.2+8), built on Feb  6 2020 02:07:52 by \"brew\" with clang 4.2.1 Compatible Apple LLVM 11.0.0 (clang-1100.0.33.17)",
